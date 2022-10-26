@@ -137,7 +137,7 @@ class MoneyTransferTest {
     var secondCardInfo = getSecondCardInfo();
     var firstCardBalanc = dashbordPage.getCardBalance(firstCardInfo);
     var secondCardBalance = dashbordPage.getCardBalance(secondCardInfo);
-    var amount = generateInvalidAmount(secondCardBalance);
+    var amount = 30000;
     var expectedBalanceFirstCard = firstCardBalanc + amount;
     var expectedBalanceSecondCard = secondCardBalance - amount;
     var transferPage = dashbordPage.selectCardToTransfer(firstCardInfo);
