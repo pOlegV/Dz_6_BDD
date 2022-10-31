@@ -115,14 +115,13 @@ class MoneyTransferTest {
     var firstCardBalanc = dashbordPage.getCardBalance(firstCardInfo);
     var secondCardBalance = dashbordPage.getCardBalance(secondCardInfo);
     var amount = generateInvalidAmount(firstCardBalanc);
-    var expectedBalanceFirstCard = firstCardBalanc - amount;
-    var expectedBalanceSecondCard = secondCardBalance + amount;
     var transferPage = dashbordPage.selectCardToTransfer(secondCardInfo);
-    dashbordPage = transferPage.makeValidTransfer(String.valueOf(amount), firstCardInfo);
+    transferPage.makeValidTransfer(String.valueOf(amount), firstCardInfo);
+    transferPage.findErrorMessage("Выполнена попытка перевода суммы, превыщающий баланс карты!");
     var actualBalanceFirstCard = dashbordPage.getCardBalance(firstCardInfo);
     var actualBalanceSecondCard = dashbordPage.getCardBalance(secondCardInfo);
-    assertEquals(expectedBalanceFirstCard, actualBalanceFirstCard);
-    assertEquals(expectedBalanceSecondCard, actualBalanceSecondCard);
+    assertEquals(firstCardBalanc, actualBalanceFirstCard);
+    assertEquals(secondCardBalance, actualBalanceSecondCard);
 
   }
   @Test
@@ -137,15 +136,14 @@ class MoneyTransferTest {
     var secondCardInfo = getSecondCardInfo();
     var firstCardBalanc = dashbordPage.getCardBalance(firstCardInfo);
     var secondCardBalance = dashbordPage.getCardBalance(secondCardInfo);
-    var amount = 30000;
-    var expectedBalanceFirstCard = firstCardBalanc + amount;
-    var expectedBalanceSecondCard = secondCardBalance - amount;
+    var amount = generateInvalidAmount(secondCardBalance);
     var transferPage = dashbordPage.selectCardToTransfer(firstCardInfo);
-    dashbordPage = transferPage.makeValidTransfer(String.valueOf(amount), secondCardInfo);
+    transferPage.makeValidTransfer(String.valueOf(amount), secondCardInfo);
+    transferPage.findErrorMessage("Выполнена попытка перевода суммы, превыщающий баланс карты!");
     var actualBalanceFirstCard = dashbordPage.getCardBalance(firstCardInfo);
     var actualBalanceSecondCard = dashbordPage.getCardBalance(secondCardInfo);
-    assertEquals(expectedBalanceFirstCard, actualBalanceFirstCard);
-    assertEquals(expectedBalanceSecondCard, actualBalanceSecondCard);
+    assertEquals(firstCardBalanc, actualBalanceFirstCard);
+    assertEquals(secondCardBalance, actualBalanceSecondCard);
 
   }
   @Test
